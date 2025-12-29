@@ -1,0 +1,220 @@
+###############################################################################
+# TrinityCore World Server Configuration (3.3.5)
+###############################################################################
+
+###############################################################################
+# DATABASE SETTINGS
+###############################################################################
+
+LoginDatabaseInfo     = "127.0.0.1;3306;trinity;trinity;auth"
+WorldDatabaseInfo     = "127.0.0.1;3306;trinity;trinity;world"
+CharacterDatabaseInfo = "127.0.0.1;3306;trinity;trinity;characters"
+
+###############################################################################
+# SERVER SETTINGS
+###############################################################################
+
+# Realm ID (must match realmlist table entry)
+RealmID = 1
+
+# Data directory (maps, vmaps, mmaps, dbc)
+DataDir = "./data"
+
+# Log directory
+LogsDir = "./logs"
+
+# World server port
+WorldServerPort = 8085
+
+# Console and remote access
+Console.Enable = 1
+Ra.Enable = 0
+Ra.IP = "0.0.0.0"
+Ra.Port = 3443
+
+# SOAP for external tools
+SOAP.Enabled = 0
+SOAP.IP = "127.0.0.1"
+SOAP.Port = 7878
+
+###############################################################################
+# GAMEPLAY SETTINGS
+###############################################################################
+
+# XP Rates
+Rate.XP.Kill    = 1
+Rate.XP.Quest   = 1
+Rate.XP.Explore = 1
+
+# Drop Rates
+Rate.Drop.Item.Poor             = 1
+Rate.Drop.Item.Normal           = 1
+Rate.Drop.Item.Uncommon         = 1
+Rate.Drop.Item.Rare             = 1
+Rate.Drop.Item.Epic             = 1
+Rate.Drop.Item.Legendary        = 1
+Rate.Drop.Item.Artifact         = 1
+Rate.Drop.Item.Referenced       = 1
+Rate.Drop.Money                 = 1
+
+# Reputation Rates
+Rate.Reputation.Gain = 1
+Rate.Reputation.LowLevelKill = 1
+Rate.Reputation.LowLevelQuest = 1
+
+# Honor Rates
+Rate.Honor = 1
+
+# Talent Points
+Rate.Talent = 1
+
+# Skill Rates
+Rate.MoveSpeed = 1
+
+# Creature/Pet Settings
+Rate.Creature.Normal.Damage = 1
+Rate.Creature.Elite.Elite.Damage = 1
+Rate.Creature.Elite.RAREELITE.Damage = 1
+Rate.Creature.Elite.WORLDBOSS.Damage = 1
+Rate.Creature.Elite.RARE.Damage = 1
+Rate.Creature.Normal.HP = 1
+Rate.Creature.Elite.Elite.HP = 1
+Rate.Creature.Elite.RAREELITE.HP = 1
+Rate.Creature.Elite.WORLDBOSS.HP = 1
+Rate.Creature.Elite.RARE.HP = 1
+
+###############################################################################
+# PLAYER SETTINGS
+###############################################################################
+
+# Starting level (1 = default)
+StartPlayerLevel = 1
+
+# Starting gold (in copper, 0 = default)
+StartPlayerMoney = 0
+
+# Max player level
+MaxPlayerLevel = 80
+
+# Allow dual talent specialization
+DualTalent.Enable = 1
+
+# Allow player to use commands
+AllowPlayerCommands = 1
+
+###############################################################################
+# GUILD SETTINGS
+###############################################################################
+
+Guild.EventLogRecordsCount = 100
+Guild.BankEventLogRecordsCount = 25
+
+###############################################################################
+# INSTANCE SETTINGS
+###############################################################################
+
+# Instance reset times
+Instance.IgnoreLevel = 0
+Instance.IgnoreRaid = 0
+Instance.GMSummonPlayer = 0
+Instance.SharedNormalHeroicId = 0
+
+###############################################################################
+# BATTLEGROUND SETTINGS
+###############################################################################
+
+Battleground.CastDeserter = 1
+Battleground.QueueAnnouncer.Enable = 0
+Battleground.QueueAnnouncer.PlayerOnly = 0
+
+# Minimum players to start
+Battleground.WarsongGulch.MinPlayers = 10
+Battleground.ArathiBasin.MinPlayers = 10
+Battleground.AlteracValley.MinPlayers = 20
+Battleground.EyeOfTheStorm.MinPlayers = 10
+Battleground.StrandOfTheAncients.MinPlayers = 10
+Battleground.IsleOfConquest.MinPlayers = 20
+
+###############################################################################
+# ARENA SETTINGS
+###############################################################################
+
+Arena.MaxRatingDifference = 150
+Arena.RatingDiscardTimer = 600000
+Arena.AutoDistributePoints = 1
+Arena.AutoDistributeInterval = 7
+Arena.QueueAnnouncer.Enable = 0
+
+###############################################################################
+# LOGGING SETTINGS
+###############################################################################
+
+LogLevel = 1
+LogFile = "Server.log"
+LogTimestamp = 0
+LogFileLevel = 0
+LogFilter.TransportMoves = 1
+LogFilter.CreatureMoves = 1
+LogFilter.VisibilityChanges = 1
+
+# GM activity logging
+GmLogFile = "gm.log"
+GmLogTimestamp = 0
+GmLogPerAccount = 0
+
+# Chat logging
+ChatLogFile = ""
+ChatLogTimestamp = 0
+
+###############################################################################
+# SECURITY SETTINGS
+###############################################################################
+
+# Warden anticheat (1 = enabled)
+Warden.Enabled = 1
+Warden.NumMemChecks = 3
+Warden.NumOtherChecks = 7
+Warden.ClientResponseDelay = 600000
+Warden.ClientCheckHoldOff = 30000
+Warden.ClientCheckFailAction = 0
+Warden.BanDuration = 86400
+
+# Flood protection
+ChatFlood.MessageCount = 10
+ChatFlood.MessageDelay = 1000
+ChatFlood.MuteTime = 10
+
+###############################################################################
+# PERFORMANCE SETTINGS
+###############################################################################
+
+# Update intervals (milliseconds)
+WorldServerUpdateInterval = 50
+
+# Thread pool
+MaxCoreStuckTime = 0
+MapUpdateInterval = 50
+ChangeWeatherInterval = 600000
+
+# Visibility
+Visibility.GroupMode = 1
+Visibility.Distance.Continents = 90
+Visibility.Distance.Instances = 120
+Visibility.Distance.BGArenas = 180
+
+# Grid system
+GridUnload = 1
+GridCleanUpDelay = 300000
+
+# Socket settings
+Network.Threads = 1
+Network.OutKBuff = -1
+Network.OutUBuff = 65536
+
+###############################################################################
+# AUTO BROADCAST
+###############################################################################
+
+AutoBroadcast.On = 0
+AutoBroadcast.Center = 0
+AutoBroadcast.Timer = 60000

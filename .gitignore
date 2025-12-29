@@ -1,0 +1,62 @@
+# TrinityCore Build Artifacts
+build/
+TrinityCore/
+
+# Server Installation
+server/
+bin/
+lib/
+logs/
+
+# Data files (extracted from client)
+data/dbc/
+data/maps/
+data/vmaps/
+data/mmaps/
+data/Cameras/
+*.MPQ
+*.mpq
+
+# Configuration files with secrets
+*.conf
+!*.conf.dist
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Database dumps
+*.sql.gz
+*.sql.bz2
+TDB_*.sql
+
+# Docker volumes
+db_data/
+
+# IDE and Editor
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+tmp/
+temp/
+
+# Backup files
+*.bak
+*.backup
+backup/
+
+# OS files
+Thumbs.db
+desktop.ini

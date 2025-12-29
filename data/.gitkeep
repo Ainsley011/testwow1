@@ -1,0 +1,7 @@
+# Place extracted client data here:
+# - dbc/
+# - maps/
+# - vmaps/
+# - mmaps/
+#
+# Use scripts/extract-data.sh to extract from your WoW 3.3.5a client

@@ -1,0 +1,96 @@
+version: '3.8'
+
+services:
+  # MySQL Database
+  database:
+    image: mysql:8.0
+    container_name: trinitycore-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-trinity}
+      MYSQL_USER: ${DB_USER:-trinity}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-trinity}
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./sql/init:/docker-entrypoint-initdb.d:ro
+    ports:
+      - "3306:3306"
+    command:
+      - --default-authentication-plugin=mysql_native_password
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    networks:
+      - trinitycore-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_ROOT_PASSWORD:-trinity}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Auth Server (Realm Server)
+  authserver:
+    image: trinitycore/trinitycore:3.3.5
+    container_name: trinitycore-auth
+    restart: unless-stopped
+    depends_on:
+      database:
+        condition: service_healthy
+    ports:
+      - "3724:3724"
+    volumes:
+      - ./configs/authserver.conf:/opt/trinitycore/etc/authserver.conf:ro
+      - auth_logs:/opt/trinitycore/logs
+    networks:
+      - trinitycore-network
+    command: ["./authserver"]
+
+  # World Server
+  worldserver:
+    image: trinitycore/trinitycore:3.3.5
+    container_name: trinitycore-world
+    restart: unless-stopped
+    depends_on:
+      database:
+        condition: service_healthy
+      authserver:
+        condition: service_started
+    ports:
+      - "8085:8085"
+      - "7878:7878"
+    volumes:
+      - ./configs/worldserver.conf:/opt/trinitycore/etc/worldserver.conf:ro
+      - ./data:/opt/trinitycore/data:ro
+      - world_logs:/opt/trinitycore/logs
+    networks:
+      - trinitycore-network
+    stdin_open: true
+    tty: true
+    command: ["./worldserver"]
+
+  # phpMyAdmin for database management (optional)
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: trinitycore-phpmyadmin
+    restart: unless-stopped
+    depends_on:
+      - database
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: database
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-trinity}
+    networks:
+      - trinitycore-network
+
+networks:
+  trinitycore-network:
+    driver: bridge
+
+volumes:
+  db_data:
+    driver: local
+  auth_logs:
+    driver: local
+  world_logs:
+    driver: local

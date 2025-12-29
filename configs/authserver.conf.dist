@@ -1,0 +1,94 @@
+###############################################################################
+# TrinityCore Auth Server Configuration (3.3.5)
+###############################################################################
+
+###############################################################################
+# DATABASE SETTINGS
+###############################################################################
+
+LoginDatabaseInfo = "127.0.0.1;3306;trinity;trinity;auth"
+
+###############################################################################
+# SERVER SETTINGS
+###############################################################################
+
+# Log directory
+LogsDir = "./logs"
+
+# Maximum allowed failed login attempts
+WrongPass.MaxCount = 0
+WrongPass.BanTime = 600
+WrongPass.BanType = 0
+
+# Bind address and port
+BindIP = "0.0.0.0"
+RealmServerPort = 3724
+
+###############################################################################
+# LOGGING SETTINGS
+###############################################################################
+
+LogLevel = 0
+LogFile = "Auth.log"
+LogTimestamp = 0
+LogFileLevel = 0
+LogColors = ""
+EnableLogDB = 0
+DBLogLevel = 1
+
+###############################################################################
+# UPDATE SETTINGS
+###############################################################################
+
+# Realms update interval (milliseconds)
+RealmsStateUpdateDelay = 20
+
+###############################################################################
+# NETWORK SETTINGS
+###############################################################################
+
+# Use external processes for auth requests
+UseProcessors = 0
+
+# Process priority
+ProcessPriority = 1
+
+# Maximum ping timeout
+MaxPingTime = 30
+
+# Realm zones (for realmlist display)
+# 1 = Development
+# 2 = United States
+# 3 = Oceanic
+# 4 = Latin America
+# 5 = Tournament
+# 6 = Korea
+# 7 = Tournament (2)
+# 8 = English
+# 9 = German
+# 10 = French
+# 11 = Spanish
+# 12 = Russian
+# 14 = Taiwan
+# 15 = Tournament (3)
+# 16 = Test Server
+# 17 = Tournament (4)
+# 18 = QA Server
+# 19 = China
+
+###############################################################################
+# IP LOCATION SETTINGS
+###############################################################################
+
+# Enable IP location database
+IPLocationFile = ""
+
+###############################################################################
+# THREAD POOL SETTINGS
+###############################################################################
+
+# Login thread pool
+Updates.EnableDatabases = 0
+Updates.AutoSetup = 1
+Updates.Redundancy = 1
+Updates.ArchivedRedundancy = 0

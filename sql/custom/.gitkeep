@@ -1,0 +1,2 @@
+# Place custom SQL modifications here
+# These will be applied after the base TrinityCore database

@@ -41,10 +41,13 @@ docker-compose logs -f
 
 ### Option 2: Manual Installation
 
-#### 1. Clone TrinityCore Source
+#### 1. Clone Repository with Submodules
 ```bash
-git clone -b 3.3.5 https://github.com/TrinityCore/TrinityCore.git
-cd TrinityCore
+git clone --recursive https://github.com/Ainsley011/testwow1.git
+cd testwow1
+
+# Or if already cloned, initialize submodules:
+git submodule update --init --recursive
 ```
 
 #### 2. Build the Server
@@ -100,6 +103,7 @@ nano ~/server/etc/authserver.conf
 
 ```
 .
+├── TrinityCore/             # TrinityCore source (git submodule)
 ├── configs/                 # Server configuration templates
 │   ├── worldserver.conf.dist
 │   └── authserver.conf.dist
@@ -111,6 +115,28 @@ nano ~/server/etc/authserver.conf
 │   └── custom/
 ├── docker-compose.yml       # Docker deployment
 └── README.md
+```
+
+## Modifying the Core
+
+The TrinityCore source is included as a git submodule pointing to your fork. To make changes:
+
+```bash
+cd TrinityCore
+# Make your changes
+git add .
+git commit -m "Your changes"
+git push origin 3.3.5
+```
+
+To pull upstream TrinityCore updates:
+```bash
+cd TrinityCore
+git remote add upstream https://github.com/TrinityCore/TrinityCore.git
+git fetch upstream
+git merge upstream/3.3.5
+# Resolve conflicts if any, then push to your fork
+git push origin 3.3.5
 ```
 
 ## Default Accounts

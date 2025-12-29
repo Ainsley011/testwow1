@@ -1,0 +1,4 @@
+[submodule "TrinityCore"]
+	path = TrinityCore
+	url = https://github.com/Ainsley011/TrinityCore-335.git
+	branch = 3.3.5

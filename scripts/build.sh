@@ -6,10 +6,10 @@
 set -e
 
 # Configuration
-TRINITY_REPO="https://github.com/TrinityCore/TrinityCore.git"
-TRINITY_BRANCH="3.3.5"
-SOURCE_DIR="${SOURCE_DIR:-$HOME/TrinityCore}"
-BUILD_DIR="${BUILD_DIR:-$SOURCE_DIR/build}"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
+SOURCE_DIR="${SOURCE_DIR:-$PROJECT_DIR/TrinityCore}"
+BUILD_DIR="${BUILD_DIR:-$PROJECT_DIR/build}"
 INSTALL_DIR="${INSTALL_DIR:-$HOME/server}"
 JOBS="${JOBS:-$(nproc)}"
 
@@ -53,18 +53,22 @@ check_dependencies() {
     log_info "All dependencies found!"
 }
 
-# Clone or update source
-clone_source() {
-    if [ -d "$SOURCE_DIR" ]; then
-        log_info "Source directory exists, updating..."
+# Initialize and update submodule
+update_source() {
+    log_info "Updating TrinityCore submodule..."
+    cd "$PROJECT_DIR"
+
+    if [ ! -d "$SOURCE_DIR/.git" ]; then
+        log_info "Initializing submodule..."
+        git submodule update --init --recursive TrinityCore
+    else
+        log_info "Pulling latest changes..."
         cd "$SOURCE_DIR"
         git fetch origin
-        git checkout "$TRINITY_BRANCH"
-        git pull origin "$TRINITY_BRANCH"
-    else
-        log_info "Cloning TrinityCore $TRINITY_BRANCH..."
-        git clone -b "$TRINITY_BRANCH" "$TRINITY_REPO" "$SOURCE_DIR"
+        git pull origin 3.3.5
     fi
+
+    log_info "TrinityCore source ready!"
 }
 
 # Configure build
@@ -107,7 +111,7 @@ main() {
     echo ""
 
     check_dependencies
-    clone_source
+    update_source
     configure_build
     build
     install

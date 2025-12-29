@@ -5,10 +5,10 @@
 --
 -- TrinityCore Security Levels:
 --   0 = SEC_PLAYER      - Regular players
---   1 = SEC_MODERATOR   - Trial GM (limited GM powers)
---   2 = SEC_GAMEMASTER  - Gamemaster (standard GM powers)
---   3 = SEC_ADMINISTRATOR - Admin / Senior GM (full server control)
---   4 = SEC_CONSOLE     - Owner (console-level access)
+--   1 = SEC_MODERATOR   - Trial GM
+--   2 = SEC_GAMEMASTER  - Gamemaster
+--   3 = SEC_ADMINISTRATOR - Admin / Senior GM
+--   4 = SEC_CONSOLE     - Owner (FULL ACCESS)
 --
 -- Default Permission Groups:
 --   195 = Player commands
@@ -19,143 +19,140 @@
 -- ============================================================================
 
 -- ============================================================================
--- SETUP DEFAULT PERMISSIONS FOR EACH SECURITY LEVEL
+-- OWNER (Security Level 4) - FULL ACCESS TO EVERYTHING
 -- ============================================================================
 
--- Ensure default permissions are set correctly
-DELETE FROM `rbac_default_permissions` WHERE `secId` IN (0, 1, 2, 3, 4);
+-- Owner gets the Administrator permission group (which includes everything)
+-- Plus we ensure they have console-level access
+DELETE FROM `rbac_default_permissions` WHERE `secId` = 4;
+INSERT INTO `rbac_default_permissions` (`secId`, `permissionId`, `realmId`) VALUES
+(4, 192, -1);  -- Full administrator access
+
+-- ============================================================================
+-- TRIAL GM (Security Level 1) - ENHANCED PERMISSIONS
+-- Added: .tele, .gm mode commands
+-- ============================================================================
+
+-- First, ensure Trial GM has moderator permissions
+DELETE FROM `rbac_default_permissions` WHERE `secId` = 1;
+INSERT INTO `rbac_default_permissions` (`secId`, `permissionId`, `realmId`) VALUES
+(1, 194, -1);  -- Moderator base permissions
+
+-- Grant additional permissions to ALL Trial GMs (Security Level 1)
+-- These are added via rbac_linked_permissions to the moderator group (194)
+
+-- GM Mode Commands for Trial GM
+INSERT IGNORE INTO `rbac_linked_permissions` (`id`, `linkedId`) VALUES
+(194, 371),   -- .gm on/off
+(194, 373),   -- .gm fly
+(194, 376);   -- .gm visible
+
+-- Teleport Commands for Trial GM
+INSERT IGNORE INTO `rbac_linked_permissions` (`id`, `linkedId`) VALUES
+(194, 737),   -- .tele (teleport self to location)
+(194, 740);   -- .tele name (teleport player to location)
+
+-- ============================================================================
+-- ENSURE OTHER SECURITY LEVELS ARE CORRECT
+-- ============================================================================
+
+DELETE FROM `rbac_default_permissions` WHERE `secId` IN (0, 2, 3);
 INSERT INTO `rbac_default_permissions` (`secId`, `permissionId`, `realmId`) VALUES
 (0, 195, -1),  -- Players get basic commands
-(1, 194, -1),  -- Trial GM (Moderator) gets moderator commands
 (2, 193, -1),  -- Gamemaster gets GM commands
-(3, 192, -1),  -- Admin gets administrator commands
-(4, 192, -1);  -- Owner (Console) gets administrator commands
+(3, 192, -1);  -- Admin gets administrator commands
 
 -- ============================================================================
--- TRIAL GM (Security Level 1) - LIMITED POWERS
--- Can: Kick, mute, teleport to players, whisper, announce
--- Cannot: Ban, spawn items, modify players, use GM mode
--- ============================================================================
-
--- Grant specific permissions to Trial GMs (Moderator level)
--- These are already included in permission group 194, but you can customize
-
--- ============================================================================
--- GAMEMASTER (Security Level 2) - STANDARD GM POWERS
--- Can: Everything Trial GM can + ban, GM mode, teleport, spawn basic items
--- Cannot: Server commands, reload, account management
--- ============================================================================
-
--- Already covered by permission group 193
-
--- ============================================================================
--- SENIOR GAMEMASTER / ADMIN (Security Level 3) - FULL CONTROL
--- Can: Everything + reload, account management, server commands
--- ============================================================================
-
--- Already covered by permission group 192
-
--- ============================================================================
--- OWNER (Security Level 4) - CONSOLE LEVEL
--- Full server access - same as administrator but highest rank
--- ============================================================================
-
--- Same as Admin (192)
-
--- ============================================================================
--- CUSTOM PERMISSION EXAMPLES
--- Uncomment and modify as needed
--- ============================================================================
-
--- Example: Give a specific account (ID 5) additional permissions
--- INSERT INTO `rbac_account_permissions` (`accountId`, `permissionId`, `granted`, `realmId`) VALUES
--- (5, 200, 1, -1);  -- Grant permission 200 to account 5
-
--- Example: Deny a permission to a specific account
--- INSERT INTO `rbac_account_permissions` (`accountId`, `permissionId`, `granted`, `realmId`) VALUES
--- (10, 201, 0, -1);  -- Deny permission 201 to account 10
-
--- ============================================================================
--- USEFUL QUERIES
--- ============================================================================
-
--- View all permissions for a security level:
--- SELECT * FROM vw_rbac WHERE `Security Level` = 2;
-
--- View permissions for a specific account:
--- SELECT p.id, p.name FROM rbac_permissions p
--- JOIN rbac_account_permissions ap ON p.id = ap.permissionId
--- WHERE ap.accountId = <account_id>;
-
--- Set an account's security level:
--- UPDATE account SET gmlevel = <level> WHERE id = <account_id>;
--- Or using the realmaccess table:
--- INSERT INTO account_access (id, gmlevel, RealmID) VALUES (<account_id>, <level>, -1)
--- ON DUPLICATE KEY UPDATE gmlevel = <level>;
-
--- ============================================================================
--- COMMON PERMISSION IDS (for reference)
+-- PERMISSION REFERENCE
 -- ============================================================================
 --
--- Player Commands (Group 195):
---   44 = .help
---   45 = .account
---   46 = .logout
+-- GM Mode Commands:
+--   371 = RBAC_PERM_COMMAND_GM           (.gm on/off)
+--   372 = RBAC_PERM_COMMAND_GM_CHAT      (.gm chat)
+--   373 = RBAC_PERM_COMMAND_GM_FLY       (.gm fly)
+--   374 = RBAC_PERM_COMMAND_GM_INGAME    (.gm ingame)
+--   375 = RBAC_PERM_COMMAND_GM_LIST      (.gm list)
+--   376 = RBAC_PERM_COMMAND_GM_VISIBLE   (.gm visible)
 --
--- Moderator Commands (Group 194):
---   200 = .kick
---   201 = .mute
---   202 = .unmute
---   203 = .whispers
+-- Teleport Commands:
+--   737 = RBAC_PERM_COMMAND_TELE         (.tele)
+--   738 = RBAC_PERM_COMMAND_TELE_ADD     (.tele add)
+--   739 = RBAC_PERM_COMMAND_TELE_DEL     (.tele del)
+--   740 = RBAC_PERM_COMMAND_TELE_NAME    (.tele name)
+--   741 = RBAC_PERM_COMMAND_TELE_GROUP   (.tele group)
 --
--- Gamemaster Commands (Group 193):
---   300 = .teleport
---   301 = .appear
---   302 = .summon
---   303 = .gm
---   304 = .additem
---   305 = .bank
+-- ============================================================================
+
+-- ============================================================================
+-- STAFF PERMISSIONS SUMMARY
+-- ============================================================================
 --
--- Administrator Commands (Group 192):
---   400 = .ban
---   401 = .unban
---   402 = .reload
---   403 = .server
---   404 = .account create
+-- TRIAL GM (Level 1):
+--   Base: Moderator commands (.kick, .mute, .unmute, .whispers, .pinfo)
+--   Added: .gm on/off, .gm fly, .gm visible
+--   Added: .tele, .tele name
 --
--- For full list, check: SELECT * FROM rbac_permissions ORDER BY id;
+-- GAMEMASTER (Level 2):
+--   Everything Trial GM has +
+--   .summon, .appear, .go, .additem, .bank
+--   .modify, .aura, .npc, .gobject
+--   .ban, .unban
+--
+-- ADMIN (Level 3):
+--   Everything Gamemaster has +
+--   .reload, .server, .account create/set
+--   Full NPC/Object spawning
+--
+-- OWNER (Level 4):
+--   FULL ACCESS TO ALL COMMANDS
+--   Same permission level as Admin but highest staff rank
+--
 -- ============================================================================
 
 -- ============================================================================
 -- SET ACCOUNT SECURITY LEVELS
 -- ============================================================================
 
--- Example: Set account 1 as Owner (Security Level 4)
--- DELETE FROM account_access WHERE id = 1;
--- INSERT INTO account_access (id, gmlevel, RealmID) VALUES (1, 4, -1);
+-- To set an account as Owner:
+-- INSERT INTO account_access (id, gmlevel, RealmID) VALUES (<account_id>, 4, -1)
+-- ON DUPLICATE KEY UPDATE gmlevel = 4;
 
--- Example: Set account 2 as Admin (Security Level 3)
--- DELETE FROM account_access WHERE id = 2;
--- INSERT INTO account_access (id, gmlevel, RealmID) VALUES (2, 3, -1);
+-- To set an account as Admin:
+-- INSERT INTO account_access (id, gmlevel, RealmID) VALUES (<account_id>, 3, -1)
+-- ON DUPLICATE KEY UPDATE gmlevel = 3;
 
--- Example: Set account 3 as Gamemaster (Security Level 2)
--- DELETE FROM account_access WHERE id = 3;
--- INSERT INTO account_access (id, gmlevel, RealmID) VALUES (3, 2, -1);
+-- To set an account as Gamemaster:
+-- INSERT INTO account_access (id, gmlevel, RealmID) VALUES (<account_id>, 2, -1)
+-- ON DUPLICATE KEY UPDATE gmlevel = 2;
 
--- Example: Set account 4 as Trial GM (Security Level 1)
--- DELETE FROM account_access WHERE id = 4;
--- INSERT INTO account_access (id, gmlevel, RealmID) VALUES (4, 1, -1);
+-- To set an account as Trial GM:
+-- INSERT INTO account_access (id, gmlevel, RealmID) VALUES (<account_id>, 1, -1)
+-- ON DUPLICATE KEY UPDATE gmlevel = 1;
 
 -- ============================================================================
--- CREATING SENIOR GAMEMASTER RANK
+-- CREATING SENIOR GAMEMASTER
 -- Since TrinityCore only has 5 security levels (0-4), Senior GM shares
--- level 3 with Admin. To distinguish them, use the custom_staff_rank_overrides
--- table in the world database.
+-- level 3 with Admin. Use custom_staff_rank_overrides for display name.
 -- ============================================================================
 
--- Example: Make account 5 a Senior Gamemaster (uses security level 3 but custom display)
--- Run this on your WORLD database:
+-- Example: Make account 5 a Senior Gamemaster (uses security level 3)
+-- First set their security level:
+-- INSERT INTO account_access (id, gmlevel, RealmID) VALUES (5, 3, -1);
+--
+-- Then set their custom display name (run on WORLD database):
 -- INSERT INTO custom_staff_rank_overrides (account_id, name, color, badge, badge_color, sort_order)
 -- VALUES (5, 'Senior GM', 'ff9900', '[S]', 'ff9900', 3);
+
+-- ============================================================================
+-- GRANT/REVOKE SPECIFIC PERMISSIONS TO INDIVIDUAL ACCOUNTS
+-- ============================================================================
+
+-- Grant a specific permission to an account:
+-- INSERT INTO rbac_account_permissions (accountId, permissionId, granted, realmId)
+-- VALUES (<account_id>, <permission_id>, 1, -1);
+
+-- Revoke/Deny a permission from an account:
+-- INSERT INTO rbac_account_permissions (accountId, permissionId, granted, realmId)
+-- VALUES (<account_id>, <permission_id>, 0, -1);
 
 -- ============================================================================

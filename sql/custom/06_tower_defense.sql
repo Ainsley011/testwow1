@@ -116,7 +116,9 @@ CREATE TABLE `custom_tower_defense_progress` (
     `total_attempts` INT UNSIGNED NOT NULL DEFAULT 0,
     `fastest_time` INT UNSIGNED DEFAULT NULL COMMENT 'Fastest completion in seconds',
     `last_attempt` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (`guid`, `arena_id`)
+    PRIMARY KEY (`guid`, `arena_id`),
+    INDEX `idx_leaderboard` (`arena_id`, `total_completions`, `fastest_time`),
+    INDEX `idx_checkpoint` (`guid`, `arena_id`, `best_wave`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Player tower defense progress';
 
 -- ============================================================================

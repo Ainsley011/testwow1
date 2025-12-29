@@ -73,8 +73,17 @@ Files:
 - Configurable arenas, waves, spawn points
 - Scaling rewards per wave
 - Progress tracking per player
+- **Checkpoints**: Start from previously beaten waves (3, 5, 7...)
+- **Leaderboards**: Top 10 fastest completion times
+- **AFK Detection**: Inactive players removed after 2 minutes
+- **Mob Death Hooks**: Proper wave completion tracking
+- **Defender Damage**: Mobs damage the defender when in range
 
-Commands: Talk to Tower Defense NPC
+Features:
+- Talk to NPC to start, view progress, or check leaderboard
+- Checkpoint system unlocks at waves 3, 5, 7, 9, etc.
+- Mobs automatically attack the defender object
+- Player activity tracked (kills, spells) for AFK detection
 
 Files:
 - `TrinityCore/src/server/scripts/Custom/npc_tower_defense.cpp`

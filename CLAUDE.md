@@ -180,6 +180,22 @@ Files:
 - `TrinityCore/src/server/scripts/Custom/mythic_plus_system.cpp`
 - `sql/custom/09_new_systems.sql`
 
+#### Eluna + Client Addon (Optional GUI)
+If Eluna is installed, a proper GUI can be displayed:
+
+Server (Eluna):
+- `lua/eluna/mythic_plus_gui.lua` - Place in server's lua_scripts folder
+
+Client Addon:
+- `lua/addon/MythicPlusUI/` - Copy to player's Interface/AddOns/
+
+Addon Commands:
+- `/mplus` - Show help
+- `/mplus lock/unlock` - Lock/unlock frame position
+- `/mplus scale <0.5-2.0>` - Resize the frame
+- `/mplus test` - Show test display
+- `/mplus reset` - Reset frame position
+
 ### 12. Custom Titles System
 - Purchasable/earnable titles with **5-25% stat bonuses**
 - Multiple acquisition methods (gold, points, kills)

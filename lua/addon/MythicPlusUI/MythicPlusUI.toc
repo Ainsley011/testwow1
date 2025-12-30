@@ -1,0 +1,8 @@
+## Interface: 30300
+## Title: |cffff8000Mythic+|r UI
+## Notes: Displays Mythic+ dungeon progress, timer, and boss tracking
+## Author: Custom Server
+## Version: 1.0.0
+## SavedVariables: MythicPlusDB
+
+MythicPlusUI.lua

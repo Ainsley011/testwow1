@@ -122,6 +122,137 @@ Files:
 - `TrinityCore/src/server/scripts/Custom/vote_buff_system.cpp`
 - `sql/custom/08_account_points.sql`
 
+### 10. Transmogrification System
+- Change gear appearance via NPC
+- Requires compatible item types
+- Configurable gold/token costs
+- Persists across sessions
+
+Features:
+- Select slot, choose from inventory items
+- Remove individual or all transmogs
+- Quality-colored item names
+- Same armor type requirement (configurable)
+
+Files:
+- `TrinityCore/src/server/scripts/Custom/npc_transmogrifier.cpp`
+- `sql/custom/09_new_systems.sql`
+
+### 11. Mythic+ Dungeon System
+- Scaling difficulty dungeons with keystones
+- Weekly rotating affixes (Fortified, Tyrannical, etc.)
+- Timer-based runs with leaderboards
+- 10%+ scaling per level
+
+Features:
+- Keystones earned from dungeons
+- 3 affixes at +2, +4, +7
+- Leaderboard per dungeon
+- Group requirement for runs
+
+Commands:
+- `.mythic info` - View your keystone
+- `.mythic keystone <dungeonId> <level> [player]` - GM: Grant keystone
+
+Files:
+- `TrinityCore/src/server/scripts/Custom/mythic_plus_system.cpp`
+- `sql/custom/09_new_systems.sql`
+
+### 12. Custom Titles System
+- Purchasable/earnable titles with **5-25% stat bonuses**
+- Multiple acquisition methods (gold, points, kills)
+- Account-wide title collection
+- Server announcements for high-tier titles
+
+Stat Bonus Tiers:
+- 5%: Basic titles (500g or 50 VP)
+- 10%: Veteran titles (2-5M gold, 1000+ kills)
+- 15%: Champion titles (10M gold, 50 DP)
+- 20%: Legend titles (50M gold, 100 DP)
+- 25%: Ascendant titles (200 DP, ultimate)
+
+Commands:
+- `.title list` - List all titles
+- `.title grant <titleId> [player]` - GM: Grant title
+
+Files:
+- `TrinityCore/src/server/scripts/Custom/custom_titles_system.cpp`
+- `sql/custom/09_new_systems.sql`
+
+### 13. Staff Activity Log
+- Logs all GM commands for auditing
+- Categorizes commands (player, item, ban, spawn, etc.)
+- Searchable log history
+- Configurable minimum security level
+
+Commands:
+- `.stafflog recent [limit]` - View recent activity
+- `.stafflog account <name> [limit]` - View staff member's activity
+- `.stafflog category <type> [limit]` - Filter by category
+- `.stafflog search <keyword>` - Search logs
+
+Files:
+- `TrinityCore/src/server/scripts/Custom/staff_activity_log.cpp`
+- `sql/custom/09_new_systems.sql`
+
+### 14. Server Statistics System
+- Real-time and historical server stats
+- Population, economy, combat, PvP tracking
+- Daily activity metrics
+- NPC and command access
+
+Stats Tracked:
+- Online players (faction split)
+- Total accounts/characters
+- Gold in circulation
+- Mobs/bosses killed
+- Arena/BG matches
+- Quest completions
+
+Commands:
+- `.serverstats` - Quick server overview
+
+Files:
+- `TrinityCore/src/server/scripts/Custom/server_stats_system.cpp`
+- `sql/custom/09_new_systems.sql`
+
+### 15. Changelog System
+- Display server updates to players
+- Category-based organization
+- Unread notification on login
+- Paginated browsing
+
+Categories:
+- Features, Bug Fixes, Balance, Content, Events, Hotfixes
+
+Commands:
+- `.changelog` - View recent updates
+- `.changelog add <cat> <ver> <title> | <desc>` - Add entry
+- `.changelog reload` - Reload entries
+
+Files:
+- `TrinityCore/src/server/scripts/Custom/npc_changelog.cpp`
+- `sql/custom/09_new_systems.sql`
+
+### 16. Talent Prestige System
+- Earn **bonus talent points** through prestige levels
+- Account-wide progression
+- Multiple requirement types (playtime, kills, etc.)
+- Up to +10 bonus talent points
+
+Prestige Levels:
+- Level 1: 1 max char (+1 point)
+- Level 5: 1000 HKs (+1 point)
+- Level 10: 10000 HKs (+2 points)
+
+Commands:
+- `.prestige info` - View your prestige status
+- `.prestige grant <player>` - GM: Grant next level
+
+Files:
+- `TrinityCore/src/server/scripts/Custom/talent_prestige_system.cpp`
+- `sql/custom/09_new_systems.sql`
+
 ## Custom Scripts Location
 
 All custom scripts are in:
@@ -136,7 +267,14 @@ TrinityCore/src/server/scripts/Custom/
 ├── item_artifact_weapon.cpp   # Artifact weapons
 ├── npc_tower_defense.cpp      # Tower defense system
 ├── npc_vip_system.cpp         # VIP system
-└── vote_buff_system.cpp       # Vote buff system
+├── vote_buff_system.cpp       # Vote buff system
+├── npc_transmogrifier.cpp     # Transmog system
+├── mythic_plus_system.cpp     # Mythic+ dungeons
+├── custom_titles_system.cpp   # Custom titles with stat bonuses
+├── staff_activity_log.cpp     # GM command logging
+├── server_stats_system.cpp    # Server statistics
+├── npc_changelog.cpp          # Changelog display
+└── talent_prestige_system.cpp # Talent prestige
 ```
 
 ## Database Tables
@@ -156,6 +294,14 @@ TrinityCore/src/server/scripts/Custom/
 - `custom_tower_defense_spawn_points` - Mob spawn points
 - `custom_vote_sites` - Voting site configuration
 - `custom_vote_buff_settings` - Vote buff settings
+- `custom_transmog_settings` - Transmog cost/rules
+- `custom_mythic_dungeons` - Mythic+ dungeon definitions
+- `custom_mythic_affix_rotation` - Weekly affix rotation
+- `custom_titles` - Custom titles with stat bonuses
+- `custom_staff_log_settings` - Staff log configuration
+- `custom_changelog` - Server changelog entries
+- `custom_talent_prestige_levels` - Prestige level definitions
+- `custom_talent_prestige_settings` - Prestige system settings
 
 ### Character Database
 - `custom_loot_log` - Loot tracking
@@ -165,6 +311,16 @@ TrinityCore/src/server/scripts/Custom/
 - `account_points` - Donation and vote points per account
 - `account_points_history` - Transaction history for auditing
 - `account_vote_tracker` - Vote timestamps per site for Vote Buff
+- `character_transmog` - Player transmog appearances
+- `character_mythic_keystone` - Player keystones
+- `custom_mythic_leaderboard` - Mythic+ run times
+- `character_custom_titles` - Owned titles
+- `character_custom_title_active` - Active title per character
+- `custom_staff_activity_log` - GM command history
+- `custom_server_stats_daily` - Daily server stats
+- `custom_server_stats_alltime` - All-time server stats
+- `character_changelog_read` - Changelog read tracking
+- `account_talent_prestige` - Account prestige levels
 
 ### Auth Database
 - `rbac_default_permissions` - Security level permissions
@@ -204,6 +360,7 @@ mysql -u root -p world < sql/custom/02_magic_stone_teleporter.sql
 mysql -u root -p world < sql/custom/03_artifact_weapons.sql
 mysql -u root -p world < sql/custom/04_world_chat.sql
 mysql -u root -p world < sql/custom/06_tower_defense.sql
+mysql -u root -p world < sql/custom/09_new_systems.sql
 
 # Auth database
 mysql -u root -p auth < sql/custom/05_staff_rbac_permissions.sql
@@ -212,6 +369,8 @@ mysql -u root -p auth < sql/custom/05_staff_rbac_permissions.sql
 mysql -u root -p characters < sql/custom/01_loot_log_table.sql
 mysql -u root -p characters < sql/custom/07_vip_system.sql
 mysql -u root -p characters < sql/custom/08_account_points.sql
+# Note: Character tables from 09_new_systems.sql are commented out
+# Uncomment and run them on the character database
 ```
 
 ## Adding New Custom Scripts

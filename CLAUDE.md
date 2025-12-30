@@ -107,6 +107,21 @@ Files:
 - `.reload custom worldchat` - Reload World Chat
 - `.reload custom towerdefense` - Reload Tower Defense
 
+### 9. Vote Buff System
+- **+10% all stats** buff when voted on all 4 sites
+- Buff automatically expires after 12 hours (vote cooldown)
+- Tracks votes per site per account
+- Announces to server when player receives buff
+
+Commands:
+- `.vote status` - Check your vote status
+- `.vote sites` - List voting site URLs
+- `.vote grant <player> <site_id>` - GM: Simulate a vote
+
+Files:
+- `TrinityCore/src/server/scripts/Custom/vote_buff_system.cpp`
+- `sql/custom/08_account_points.sql`
+
 ## Custom Scripts Location
 
 All custom scripts are in:
@@ -119,7 +134,9 @@ TrinityCore/src/server/scripts/Custom/
 ├── cs_loot.cpp                # Loot logging commands
 ├── item_magic_stone.cpp       # Teleporter item
 ├── item_artifact_weapon.cpp   # Artifact weapons
-└── npc_tower_defense.cpp      # Tower defense system
+├── npc_tower_defense.cpp      # Tower defense system
+├── npc_vip_system.cpp         # VIP system
+└── vote_buff_system.cpp       # Vote buff system
 ```
 
 ## Database Tables
@@ -137,6 +154,8 @@ TrinityCore/src/server/scripts/Custom/
 - `custom_tower_defense_waves` - Wave definitions
 - `custom_tower_defense_rewards` - Wave rewards
 - `custom_tower_defense_spawn_points` - Mob spawn points
+- `custom_vote_sites` - Voting site configuration
+- `custom_vote_buff_settings` - Vote buff settings
 
 ### Character Database
 - `custom_loot_log` - Loot tracking
@@ -145,6 +164,7 @@ TrinityCore/src/server/scripts/Custom/
 - `custom_tower_defense_progress` - Player TD progress
 - `account_points` - Donation and vote points per account
 - `account_points_history` - Transaction history for auditing
+- `account_vote_tracker` - Vote timestamps per site for Vote Buff
 
 ### Auth Database
 - `rbac_default_permissions` - Security level permissions

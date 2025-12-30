@@ -88,11 +88,45 @@ CREATE TABLE `custom_vote_sites` (
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Voting sites configuration';
 
--- Example vote sites (customize with your own!)
+-- 4 Vote sites for Vote Buff system
 INSERT INTO `custom_vote_sites` (`name`, `url`, `points_per_vote`, `cooldown_hours`, `sort_order`) VALUES
 ('TopG', 'https://topg.org/vote/YOUR_SERVER_ID', 2, 12, 10),
 ('Top100Arena', 'https://top100arena.com/vote/YOUR_SERVER_ID', 2, 12, 20),
-('Private Server List', 'https://private-servers.com/vote/YOUR_SERVER_ID', 1, 12, 30);
+('GTTop100', 'https://gtop100.com/vote/YOUR_SERVER_ID', 2, 12, 30),
+('Private Server List', 'https://private-servers.com/vote/YOUR_SERVER_ID', 2, 12, 40);
+
+-- ============================================================================
+-- VOTE TRACKER TABLE (Character Database)
+-- Tracks individual votes per site for Vote Buff system
+-- ============================================================================
+
+DROP TABLE IF EXISTS `account_vote_tracker`;
+CREATE TABLE `account_vote_tracker` (
+    `account_id` INT UNSIGNED NOT NULL,
+    `site_id` INT UNSIGNED NOT NULL,
+    `last_vote` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`account_id`, `site_id`),
+    INDEX `idx_last_vote` (`last_vote`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Tracks votes per site for Vote Buff';
+
+-- ============================================================================
+-- VOTE BUFF SETTINGS (World Database)
+-- ============================================================================
+
+DROP TABLE IF EXISTS `custom_vote_buff_settings`;
+CREATE TABLE `custom_vote_buff_settings` (
+    `setting_key` VARCHAR(50) NOT NULL,
+    `setting_value` VARCHAR(255) NOT NULL,
+    `description` VARCHAR(255) DEFAULT NULL,
+    PRIMARY KEY (`setting_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Vote Buff system settings';
+
+INSERT INTO `custom_vote_buff_settings` (`setting_key`, `setting_value`, `description`) VALUES
+('enabled', '1', 'Enable/disable Vote Buff system'),
+('buff_spell_id', '25898', 'Spell ID for buff (25898 = Greater Blessing of Kings, 10% all stats)'),
+('required_sites', '4', 'Number of sites required to vote on for buff'),
+('buff_duration_hours', '12', 'How long the buff lasts (matches vote cooldown)'),
+('announce_buff', '1', 'Announce when player receives Vote Buff');
 
 -- ============================================================================
 -- HELPFUL PROCEDURES

@@ -123,10 +123,129 @@ CREATE TABLE `custom_vote_buff_settings` (
 
 INSERT INTO `custom_vote_buff_settings` (`setting_key`, `setting_value`, `description`) VALUES
 ('enabled', '1', 'Enable/disable Vote Buff system'),
-('buff_spell_id', '25898', 'Spell ID for buff (25898 = Greater Blessing of Kings, 10% all stats)'),
+('buff_spell_id', '900001', 'Spell ID for Vote Buff (custom spell)'),
 ('required_sites', '4', 'Number of sites required to vote on for buff'),
 ('buff_duration_hours', '12', 'How long the buff lasts (matches vote cooldown)'),
 ('announce_buff', '1', 'Announce when player receives Vote Buff');
+
+-- ============================================================================
+-- CUSTOM VOTE BUFF SPELL (World Database - spell_dbc)
+-- Spell ID: 900001 - "Vote Buff" - +10% All Stats
+-- ============================================================================
+
+DELETE FROM `spell_dbc` WHERE `Id` = 900001;
+INSERT INTO `spell_dbc` (
+    `Id`, `Dispel`, `Mechanic`, `Attributes`, `AttributesEx`, `AttributesEx2`, `AttributesEx3`,
+    `AttributesEx4`, `AttributesEx5`, `AttributesEx6`, `AttributesEx7`, `Stances`, `StancesNot`,
+    `Targets`, `CastingTimeIndex`, `AuraInterruptFlags`, `ProcFlags`, `ProcChance`, `ProcCharges`,
+    `MaxLevel`, `BaseLevel`, `SpellLevel`, `DurationIndex`, `RangeIndex`, `StackAmount`,
+    `EquippedItemClass`, `EquippedItemSubClassMask`, `EquippedItemInventoryTypeMask`,
+    `Effect1`, `Effect2`, `Effect3`,
+    `EffectDieSides1`, `EffectDieSides2`, `EffectDieSides3`,
+    `EffectRealPointsPerLevel1`, `EffectRealPointsPerLevel2`, `EffectRealPointsPerLevel3`,
+    `EffectBasePoints1`, `EffectBasePoints2`, `EffectBasePoints3`,
+    `EffectMechanic1`, `EffectMechanic2`, `EffectMechanic3`,
+    `EffectImplicitTargetA1`, `EffectImplicitTargetA2`, `EffectImplicitTargetA3`,
+    `EffectImplicitTargetB1`, `EffectImplicitTargetB2`, `EffectImplicitTargetB3`,
+    `EffectRadiusIndex1`, `EffectRadiusIndex2`, `EffectRadiusIndex3`,
+    `EffectApplyAuraName1`, `EffectApplyAuraName2`, `EffectApplyAuraName3`,
+    `EffectAmplitude1`, `EffectAmplitude2`, `EffectAmplitude3`,
+    `EffectMultipleValue1`, `EffectMultipleValue2`, `EffectMultipleValue3`,
+    `EffectMiscValue1`, `EffectMiscValue2`, `EffectMiscValue3`,
+    `EffectMiscValueB1`, `EffectMiscValueB2`, `EffectMiscValueB3`,
+    `EffectTriggerSpell1`, `EffectTriggerSpell2`, `EffectTriggerSpell3`,
+    `EffectSpellClassMaskA1`, `EffectSpellClassMaskA2`, `EffectSpellClassMaskA3`,
+    `EffectSpellClassMaskB1`, `EffectSpellClassMaskB2`, `EffectSpellClassMaskB3`,
+    `EffectSpellClassMaskC1`, `EffectSpellClassMaskC2`, `EffectSpellClassMaskC3`,
+    `MaxTargetLevel`, `SpellFamilyName`, `SpellFamilyFlags1`, `SpellFamilyFlags2`, `SpellFamilyFlags3`,
+    `MaxAffectedTargets`, `DmgClass`, `PreventionType`,
+    `DmgMultiplier1`, `DmgMultiplier2`, `DmgMultiplier3`,
+    `AreaGroupId`, `SchoolMask`, `Comment`
+) VALUES (
+    900001,  -- Id: Custom Vote Buff spell
+    0,       -- Dispel: None (can't be dispelled)
+    0,       -- Mechanic: None
+    336,     -- Attributes: SPELL_ATTR0_PASSIVE | SPELL_ATTR0_HIDE_IN_COMBAT_LOG
+    0,       -- AttributesEx
+    0,       -- AttributesEx2
+    0,       -- AttributesEx3
+    0,       -- AttributesEx4
+    0,       -- AttributesEx5
+    0,       -- AttributesEx6
+    0,       -- AttributesEx7
+    0,       -- Stances
+    0,       -- StancesNot
+    0,       -- Targets
+    1,       -- CastingTimeIndex: Instant
+    0,       -- AuraInterruptFlags
+    0,       -- ProcFlags
+    0,       -- ProcChance
+    0,       -- ProcCharges
+    0,       -- MaxLevel
+    0,       -- BaseLevel
+    0,       -- SpellLevel
+    21,      -- DurationIndex: -1 (permanent, we control via code)
+    1,       -- RangeIndex: Self
+    0,       -- StackAmount
+    -1,      -- EquippedItemClass
+    0,       -- EquippedItemSubClassMask
+    0,       -- EquippedItemInventoryTypeMask
+    6,       -- Effect1: SPELL_EFFECT_APPLY_AURA
+    0,       -- Effect2
+    0,       -- Effect3
+    0,       -- EffectDieSides1
+    0,       -- EffectDieSides2
+    0,       -- EffectDieSides3
+    0,       -- EffectRealPointsPerLevel1
+    0,       -- EffectRealPointsPerLevel2
+    0,       -- EffectRealPointsPerLevel3
+    9,       -- EffectBasePoints1: 10% (value = base + 1)
+    0,       -- EffectBasePoints2
+    0,       -- EffectBasePoints3
+    0,       -- EffectMechanic1
+    0,       -- EffectMechanic2
+    0,       -- EffectMechanic3
+    1,       -- EffectImplicitTargetA1: TARGET_UNIT_CASTER
+    0,       -- EffectImplicitTargetA2
+    0,       -- EffectImplicitTargetA3
+    0,       -- EffectImplicitTargetB1
+    0,       -- EffectImplicitTargetB2
+    0,       -- EffectImplicitTargetB3
+    0,       -- EffectRadiusIndex1
+    0,       -- EffectRadiusIndex2
+    0,       -- EffectRadiusIndex3
+    137,     -- EffectApplyAuraName1: SPELL_AURA_MOD_TOTAL_STAT_PERCENTAGE
+    0,       -- EffectApplyAuraName2
+    0,       -- EffectApplyAuraName3
+    0,       -- EffectAmplitude1
+    0,       -- EffectAmplitude2
+    0,       -- EffectAmplitude3
+    0,       -- EffectMultipleValue1
+    0,       -- EffectMultipleValue2
+    0,       -- EffectMultipleValue3
+    -1,      -- EffectMiscValue1: -1 = All stats (STR, AGI, STA, INT, SPI)
+    0,       -- EffectMiscValue2
+    0,       -- EffectMiscValue3
+    0,       -- EffectMiscValueB1
+    0,       -- EffectMiscValueB2
+    0,       -- EffectMiscValueB3
+    0,       -- EffectTriggerSpell1
+    0,       -- EffectTriggerSpell2
+    0,       -- EffectTriggerSpell3
+    0, 0, 0, -- EffectSpellClassMaskA
+    0, 0, 0, -- EffectSpellClassMaskB
+    0, 0, 0, -- EffectSpellClassMaskC
+    0,       -- MaxTargetLevel
+    0,       -- SpellFamilyName
+    0, 0, 0, -- SpellFamilyFlags
+    0,       -- MaxAffectedTargets
+    0,       -- DmgClass
+    0,       -- PreventionType
+    0, 0, 0, -- DmgMultiplier
+    0,       -- AreaGroupId
+    1,       -- SchoolMask: Holy (for the nice gold icon)
+    'Vote Buff - +10% All Stats'
+);
 
 -- ============================================================================
 -- HELPFUL PROCEDURES

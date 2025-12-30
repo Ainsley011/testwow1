@@ -39,10 +39,21 @@ File: `TrinityCore/src/server/scripts/Commands/cs_loot.cpp`
 - Right-click item opens gossip menu
 - Database-configurable destinations with categories
 - Custom colors and icons
+- **Account Info Tab**: View donation/vote points, open bank & mailbox
+
+Features:
+- Teleport categories with faction/level restrictions
+- GM-only destinations
+- Account Info submenu with:
+  - Donation Points display
+  - Vote Points display
+  - Open Bank (anywhere)
+  - Open Mailbox (anywhere)
 
 Files:
 - `TrinityCore/src/server/scripts/Custom/item_magic_stone.cpp`
 - `sql/custom/02_magic_stone_teleporter.sql`
+- `sql/custom/08_account_points.sql`
 
 ### 5. Artifact Weapon System
 - Database-driven weapon progression with tiers
@@ -132,6 +143,8 @@ TrinityCore/src/server/scripts/Custom/
 - `character_world_chat` - Player chat preferences
 - `character_artifact_weapons` - Player weapon progress
 - `custom_tower_defense_progress` - Player TD progress
+- `account_points` - Donation and vote points per account
+- `account_points_history` - Transaction history for auditing
 
 ### Auth Database
 - `rbac_default_permissions` - Security level permissions
@@ -177,6 +190,8 @@ mysql -u root -p auth < sql/custom/05_staff_rbac_permissions.sql
 
 # Character database
 mysql -u root -p characters < sql/custom/01_loot_log_table.sql
+mysql -u root -p characters < sql/custom/07_vip_system.sql
+mysql -u root -p characters < sql/custom/08_account_points.sql
 ```
 
 ## Adding New Custom Scripts

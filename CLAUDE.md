@@ -152,9 +152,12 @@ Features:
 - Leaderboard per dungeon
 - **+10% mob HP per key level**
 - **+8% mob damage per key level**
-- **Automatic boss kill tracking**
-- **Tiered loot rewards**
+- **Automatic boss kill tracking with progress announcements**
+- **Tiered loot rewards from end chest**
 - **Key upgrade: +1 to +3 levels based on speed**
+- **Reward chest spawns at final boss location**
+- **No gold drops from mobs** (consolidated into chest reward)
+- **Progress command shows bosses, time, and visual progress bar**
 
 Loot Tiers:
 | Key Level | Gold | Items | Tokens |
@@ -169,6 +172,7 @@ Loot Tiers:
 
 Commands:
 - `.mythic info` - View your keystone
+- `.mythic progress` - View current run progress (bosses, timer, progress bar)
 - `.mythic reload` - GM: Reload mythic tables
 - `.mythic keystone <dungeonId> <level> [player]` - GM: Grant keystone
 

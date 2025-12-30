@@ -45,21 +45,52 @@ CREATE TABLE `custom_mythic_dungeons` (
     `map_id` INT UNSIGNED NOT NULL,
     `name` VARCHAR(100) NOT NULL,
     `timer_minutes` INT UNSIGNED NOT NULL DEFAULT 30,
-    `enemy_forces` INT UNSIGNED NOT NULL DEFAULT 100,
+    `boss_count` TINYINT UNSIGNED NOT NULL DEFAULT 3,
     `enabled` TINYINT(1) NOT NULL DEFAULT 1,
+    `entrance_x` FLOAT NOT NULL DEFAULT 0,
+    `entrance_y` FLOAT NOT NULL DEFAULT 0,
+    `entrance_z` FLOAT NOT NULL DEFAULT 0,
+    `entrance_o` FLOAT NOT NULL DEFAULT 0,
     PRIMARY KEY (`dungeon_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Sample dungeons
-INSERT INTO `custom_mythic_dungeons` (`map_id`, `name`, `timer_minutes`, `enemy_forces`, `enabled`) VALUES
-(576, 'The Nexus', 25, 100, 1),
-(601, 'Azjol-Nerub', 20, 80, 1),
-(619, 'Ahn''kahet: The Old Kingdom', 30, 120, 1),
-(604, 'Gundrak', 25, 100, 1),
-(608, 'Violet Hold', 20, 60, 1),
-(658, 'Pit of Saron', 30, 100, 1),
-(632, 'The Forge of Souls', 25, 80, 1),
-(668, 'Halls of Reflection', 25, 80, 1);
+-- Sample dungeons with entrance coordinates and boss counts
+INSERT INTO `custom_mythic_dungeons` (`map_id`, `name`, `timer_minutes`, `boss_count`, `enabled`, `entrance_x`, `entrance_y`, `entrance_z`, `entrance_o`) VALUES
+(576, 'The Nexus', 25, 4, 1, 154.0, -12.7, -40.4, 0),
+(601, 'Azjol-Nerub', 20, 3, 1, 400.0, 793.0, 831.0, 0),
+(619, 'Ahn''kahet: The Old Kingdom', 30, 5, 1, 192.0, 984.0, 356.0, 0),
+(604, 'Gundrak', 25, 4, 1, 1893.0, 635.0, 146.0, 0),
+(608, 'Violet Hold', 20, 3, 1, 1803.0, 805.0, 44.0, 0),
+(658, 'Pit of Saron', 30, 3, 1, 440.0, 213.0, 528.0, 0),
+(632, 'The Forge of Souls', 25, 2, 1, 5595.0, 2172.0, 798.0, 0),
+(668, 'Halls of Reflection', 25, 3, 1, 5239.0, 1933.0, 707.0, 0),
+(574, 'Utgarde Keep', 25, 3, 1, 156.0, -85.0, 12.0, 0),
+(575, 'Utgarde Pinnacle', 30, 4, 1, 268.0, -445.0, 174.0, 0),
+(600, 'Drak''Tharon Keep', 25, 4, 1, -476.0, -696.0, 29.0, 0),
+(595, 'Culling of Stratholme', 35, 5, 1, 2244.0, 1252.0, 131.0, 0);
+
+-- Mythic+ loot tiers (World database)
+DROP TABLE IF EXISTS `custom_mythic_loot_tiers`;
+CREATE TABLE `custom_mythic_loot_tiers` (
+    `min_level` TINYINT UNSIGNED NOT NULL,
+    `max_level` TINYINT UNSIGNED NOT NULL,
+    `gold_reward` INT UNSIGNED NOT NULL DEFAULT 0,
+    `item_count` TINYINT UNSIGNED NOT NULL DEFAULT 1,
+    `token_reward` INT UNSIGNED NOT NULL DEFAULT 0,
+    `loot_items` TEXT,
+    PRIMARY KEY (`min_level`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Loot tiers - gold in copper, items are comma-separated entry IDs
+-- Placeholder item IDs - replace with your server's actual reward items
+INSERT INTO `custom_mythic_loot_tiers` VALUES
+(1, 3, 100000, 1, 5, '49426,47241,45038'),       -- +1 to +3: 10g, 1 item, 5 tokens
+(4, 6, 250000, 2, 10, '49426,47241,45038,50274'), -- +4 to +6: 25g, 2 items, 10 tokens
+(7, 9, 500000, 2, 20, '50274,50259,50273'),       -- +7 to +9: 50g, 2 items, 20 tokens
+(10, 12, 1000000, 3, 35, '50274,50259,50273,50231'), -- +10 to +12: 100g, 3 items, 35 tokens
+(13, 15, 2000000, 3, 50, '50231,50267,50260'),    -- +13 to +15: 200g, 3 items, 50 tokens
+(16, 20, 5000000, 4, 100, '50267,50260,50070'),   -- +16 to +20: 500g, 4 items, 100 tokens
+(21, 255, 10000000, 5, 200, '50070,50274,50267'); -- +21+: 1000g, 5 items, 200 tokens
 
 -- Affix rotation (World database)
 DROP TABLE IF EXISTS `custom_mythic_affix_rotation`;

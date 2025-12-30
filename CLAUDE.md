@@ -142,16 +142,34 @@ Files:
 - Scaling difficulty dungeons with keystones
 - Weekly rotating affixes (Fortified, Tyrannical, etc.)
 - Timer-based runs with leaderboards
-- 10%+ scaling per level
+- **Solo or group runs supported**
+- **Automatic mob scaling based on key level**
+- **Loot rewards scale with key level**
 
 Features:
 - Keystones earned from dungeons
 - 3 affixes at +2, +4, +7
 - Leaderboard per dungeon
-- Group requirement for runs
+- **+10% mob HP per key level**
+- **+8% mob damage per key level**
+- **Automatic boss kill tracking**
+- **Tiered loot rewards**
+- **Key upgrade: +1 to +3 levels based on speed**
+
+Loot Tiers:
+| Key Level | Gold | Items | Tokens |
+|-----------|------|-------|--------|
+| +1 to +3 | 10g | 1 | 5 |
+| +4 to +6 | 25g | 2 | 10 |
+| +7 to +9 | 50g | 2 | 20 |
+| +10 to +12 | 100g | 3 | 35 |
+| +13 to +15 | 200g | 3 | 50 |
+| +16 to +20 | 500g | 4 | 100 |
+| +21+ | 1000g | 5 | 200 |
 
 Commands:
 - `.mythic info` - View your keystone
+- `.mythic reload` - GM: Reload mythic tables
 - `.mythic keystone <dungeonId> <level> [player]` - GM: Grant keystone
 
 Files:

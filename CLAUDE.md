@@ -100,12 +100,44 @@ Files:
 - `TrinityCore/src/server/scripts/Custom/npc_tower_defense.cpp`
 - `sql/custom/06_tower_defense.sql`
 
-### 8. Hot-Reload Commands
+### 8. Hot-Reload System
+- Centralized manager for reloading database tables
+- Category-based organization (Custom, Item, Event, Config, etc.)
+- Reload tracking with statistics and logging
+- Dependency management between tables
+- Audit logging to database
+
+Commands:
 - `.reload custom all` - Reload all custom tables
-- `.reload custom teleport` - Reload Magic Stone data
-- `.reload custom artifact` - Reload Artifact Weapons
-- `.reload custom worldchat` - Reload World Chat
-- `.reload custom towerdefense` - Reload Tower Defense
+- `.reload custom list` - List all reloadable tables with status
+- `.reload custom status` - Show reload statistics
+- `.reload custom category <name>` - Reload all tables in category
+- `.reload custom <table>` - Reload specific table
+
+Available Tables:
+| Table | Description |
+|-------|-------------|
+| teleport | Magic Stone Teleporter |
+| artifact | Artifact Weapons |
+| worldchat | World Chat settings |
+| towerdefense | Tower Defense arenas/waves |
+| vip | VIP System |
+| mythic | Mythic+ dungeons |
+| titles | Custom Titles |
+| prestige | Talent Prestige |
+| serverstats | Server Statistics |
+| changelog | Changelog entries |
+| stafflog | Staff Activity Log |
+| transmog | Transmogrification |
+| votebuff | Vote Buff System |
+
+Categories: Core, Custom, NPC, Item, Spell, Quest, Economy, PvP, Event, Config
+
+Files:
+- `TrinityCore/src/server/scripts/Custom/hot_reload_manager.h`
+- `TrinityCore/src/server/scripts/Custom/hot_reload_manager.cpp`
+- `TrinityCore/src/server/scripts/Custom/cs_custom_reload.cpp`
+- `sql/custom/10_hot_reload_system.sql`
 
 ### 9. Vote Buff System
 - **+10% all stats** buff when voted on all 4 sites

@@ -1,0 +1,17 @@
+ID,CategoryId,SkillCostId,Name,Description,SpellIcon,AlternateVerb,CanLink,ParentSkillLineId,ParentTierIndex,Flags
+# ============================================================================
+# CUSTOM SKILLS - SkillLine.dbc Template
+# Starting at ID 900 to avoid conflicts
+# ============================================================================
+# CategoryId: 6=Weapon, 7=Class, 8=Armor, 9=Secondary, 10=Languages, 11=Profession, 12=Not displayed
+# CanLink: Whether skill can be linked in chat
+# Flags: Various behavior flags
+
+# Example: Custom Profession
+900,11,0,Runeforging,Create powerful runes to enhance equipment.,0,Runeforge,1,0,0,0
+
+# Example: Custom Weapon Skill
+901,6,0,Exotic Weapons,Proficiency with rare and unusual weapons.,0,,1,0,0,0
+
+# Example: Custom Secondary Skill
+902,9,0,Monster Hunting,Track and hunt dangerous creatures.,0,Hunt,1,0,0,0

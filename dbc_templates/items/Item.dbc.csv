@@ -1,0 +1,98 @@
+ID,Class,SubClass,SoundOverrideSubclass,Material,DisplayInfoID,InventoryType,SheatheType
+# ============================================================================
+# CUSTOM ITEMS - Item.dbc defines basic item properties
+# Use with ItemDisplayInfo.dbc for visuals
+# Starting at ID 100000 to avoid conflicts
+# ============================================================================
+# Class: 0=Consumable, 1=Container, 2=Weapon, 4=Armor, 7=Tradeskill, 9=Recipe, 12=Quest, 15=Misc
+# SubClass varies by Class (see below)
+# InventoryType: 0=Non-equip, 1=Head, 2=Neck, 3=Shoulder, 4=Shirt, 5=Chest, 6=Waist, 7=Legs, 8=Feet, 9=Wrists, 10=Hands, 11=Finger, 12=Trinket, 13=Weapon, 14=Shield, 15=Ranged, 16=Back, 17=2H Weapon, 18=Bag, 19=Tabard, 20=Robe, 21=Main Hand, 22=Off Hand, 23=Held, 24=Ammo, 25=Thrown, 26=Ranged Right
+# SheatheType: 0=None, 1=TwoHandedWeapon, 2=Staff, 3=OneHanded, 4=Shield, 5=Rod, 6=OffHand
+
+# === WEAPONS ===
+# Weapon SubClass: 0=Axe1H, 1=Axe2H, 2=Bow, 3=Gun, 4=Mace1H, 5=Mace2H, 6=Polearm, 7=Sword1H, 8=Sword2H, 10=Staff, 13=Fist, 14=Misc, 15=Dagger, 16=Thrown, 17=Spear, 18=Crossbow, 19=Wand, 20=FishingPole
+
+# Mythic Sword (1H)
+100001,2,7,-1,1,65419,21,3
+# Mythic Greatsword (2H)
+100002,2,8,-1,1,65420,17,1
+# Mythic Staff
+100003,2,10,-1,2,65421,17,2
+# Mythic Dagger
+100004,2,15,-1,1,65422,13,3
+# Mythic Bow
+100005,2,2,-1,2,65423,15,0
+# Mythic Axe (2H)
+100006,2,1,-1,1,65424,17,1
+# Mythic Mace (1H)
+100007,2,4,-1,1,65425,21,3
+# Mythic Wand
+100008,2,19,-1,2,65426,26,0
+
+# === ARMOR - PLATE ===
+# Armor SubClass: 0=Misc, 1=Cloth, 2=Leather, 3=Mail, 4=Plate, 6=Shield
+
+# Mythic Plate Helm
+100010,4,4,-1,1,65430,1,0
+# Mythic Plate Shoulders
+100011,4,4,-1,1,65431,3,0
+# Mythic Plate Chest
+100012,4,4,-1,1,65432,5,0
+# Mythic Plate Bracers
+100013,4,4,-1,1,65433,9,0
+# Mythic Plate Gloves
+100014,4,4,-1,1,65434,10,0
+# Mythic Plate Belt
+100015,4,4,-1,1,65435,6,0
+# Mythic Plate Legs
+100016,4,4,-1,1,65436,7,0
+# Mythic Plate Boots
+100017,4,4,-1,1,65437,8,0
+
+# === ARMOR - MAIL ===
+100020,4,3,-1,4,65440,1,0
+100021,4,3,-1,4,65441,3,0
+100022,4,3,-1,4,65442,5,0
+100023,4,3,-1,4,65443,9,0
+100024,4,3,-1,4,65444,10,0
+100025,4,3,-1,4,65445,6,0
+100026,4,3,-1,4,65446,7,0
+100027,4,3,-1,4,65447,8,0
+
+# === ARMOR - LEATHER ===
+100030,4,2,-1,8,65450,1,0
+100031,4,2,-1,8,65451,3,0
+100032,4,2,-1,8,65452,5,0
+100033,4,2,-1,8,65453,9,0
+100034,4,2,-1,8,65454,10,0
+100035,4,2,-1,8,65455,6,0
+100036,4,2,-1,8,65456,7,0
+100037,4,2,-1,8,65457,8,0
+
+# === ARMOR - CLOTH ===
+100040,4,1,-1,7,65460,1,0
+100041,4,1,-1,7,65461,3,0
+100042,4,1,-1,7,65462,20,0
+100043,4,1,-1,7,65463,9,0
+100044,4,1,-1,7,65464,10,0
+100045,4,1,-1,7,65465,6,0
+100046,4,1,-1,7,65466,7,0
+100047,4,1,-1,7,65467,8,0
+
+# === ACCESSORIES ===
+# Mythic Necklace
+100050,4,0,-1,0,65470,2,0
+# Mythic Ring 1
+100051,4,0,-1,0,65471,11,0
+# Mythic Ring 2
+100052,4,0,-1,0,65472,11,0
+# Mythic Trinket 1
+100053,4,0,-1,0,65473,12,0
+# Mythic Trinket 2
+100054,4,0,-1,0,65474,12,0
+# Mythic Cloak
+100055,4,1,-1,7,65475,16,0
+# Mythic Shield
+100056,4,6,-1,6,65476,14,4
+# Mythic Held Off-Hand
+100057,4,0,-1,0,65477,23,0

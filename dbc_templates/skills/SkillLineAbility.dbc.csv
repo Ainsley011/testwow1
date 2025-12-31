@@ -1,0 +1,34 @@
+ID,SkillLine,Spell,RaceMask,ClassMask,ExcludeRace,ExcludeClass,MinSkillLineRank,SupercededBySpell,AcquireMethod,TrivialSkillLineRankHigh,TrivialSkillLineRankLow,CharacterPoints1,CharacterPoints2
+# ============================================================================
+# CUSTOM SKILL ABILITIES - SkillLineAbility.dbc Template
+# Links spells to skills
+# Starting at ID 25000 to avoid conflicts
+# ============================================================================
+# SkillLine: ID from SkillLine.dbc
+# Spell: Spell ID this skill teaches
+# RaceMask/ClassMask: Who can learn (-1 = all)
+# MinSkillLineRank: Skill level required
+# SupercededBySpell: Higher rank spell that replaces this
+# AcquireMethod: 0=Trainer, 1=Discovery, 2=Talent
+
+# Example: Runeforging abilities
+25000,900,100200,0,-1,0,0,1,0,0,0,0,0,0
+25001,900,100201,0,-1,0,0,75,0,0,0,0,0,0
+25002,900,100202,0,-1,0,0,150,0,0,0,0,0,0
+25003,900,100203,0,-1,0,0,225,0,0,0,0,0,0
+25004,900,100204,0,-1,0,0,300,0,0,0,0,0,0
+25005,900,100205,0,-1,0,0,375,0,0,0,0,0,0
+25006,900,100206,0,-1,0,0,450,0,0,0,0,0,0
+
+# Example: Exotic Weapon abilities (class-specific)
+25100,901,100210,0,1,0,0,1,0,0,0,0,0,0
+25101,901,100211,0,2,0,0,1,0,0,0,0,0,0
+25102,901,100212,0,4,0,0,1,0,0,0,0,0,0
+
+# Example: Monster Hunting abilities
+25200,902,100220,0,-1,0,0,1,0,0,0,0,0,0
+25201,902,100221,0,-1,0,0,50,0,0,75,25,0,0
+25202,902,100222,0,-1,0,0,100,0,0,150,75,0,0
+25203,902,100223,0,-1,0,0,150,0,0,225,150,0,0
+25204,902,100224,0,-1,0,0,225,0,0,300,225,0,0
+25205,902,100225,0,-1,0,0,300,0,0,375,300,0,0
